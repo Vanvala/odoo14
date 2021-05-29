@@ -8,10 +8,14 @@
     'category': 'Productivity',
     'website': 'https://www.agbuda.by',
     'licence': 'LGPL-3',
-    'depends' : [ ],
+    'depends': ['sale',
+                'mail'
+                ],
     'data': [
         'security/ir.model.access.csv',
-        'views/patient.xml'
+        'data/data.xml',
+        'views/patient.xml',
+        'views/sale.xml'
     ],
     'demo': [],
     'qweb': [],
