@@ -19,6 +19,12 @@ class HospitalPatient(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'),
                               ('done', 'Done'), ('cancel', 'Cancel')], default='draft', string='Status', tracking=True)
     responsible_id = fields.Many2one(comodel_name='res.partner', string="Responsible", tracking=True)
+    appointment_count = fields.Integer(string='Appointments', compute='_compute_appointment_count')
+
+    def _compute_appointment_count(self):
+        for rec in self:
+            rec.appointment_count = self.env['hospital.appointment'].search_count([('patient_id', '=', rec.id)])
+    #     select count * from hospital.appointment where patient_id = 5
 
     def action_confirm(self):
         self.state = 'confirmed'
@@ -36,6 +42,15 @@ class HospitalPatient(models.Model):
     def create(self, values):
         if not values.get('note'):
             values['note'] = 'New patient'
-        if values.get('ref', _('New')) == ('New'):
+        if values.get('ref', _('New')) == _('New'):
             values['ref'] = self.env['ir.sequence'].next_by_code('hospital.patient') or _('New')
         return super(HospitalPatient, self).create(values)
+
+    @api.model
+    def default_get(self, fields):
+        result = super(HospitalPatient, self).default_get(fields)
+        print('result------>', result)
+        print('field------------->',fields)
+        result['age'] = 50
+        return result
+

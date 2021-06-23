@@ -36,6 +36,7 @@
                 <field name="name"/>
                 <field name="responsible_id"/>
                 <field name="age"/>
+                <field name="appointment_count"/>
                 <field name="gender"/>
                 <field name="note"/>
                 <field name="state"/>
@@ -57,6 +58,8 @@
                             type="object" states="cancel"/>
                     <button name="action_cancel" id="button_cancel" string="Cancel" type="object"
                             states="draft,done,confirmed" confirm="Are you sure?"/>
+                    <button id="btn_create_appointment" name="%(om_hospital.action_create_appointment)d" string="Create Appointment"
+                            class="btn_primary" type="action"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
                 </header>
                 <div class="oe_title">
@@ -70,6 +73,7 @@
                             <field name="name"/>
                             <field name="responsible_id"/>
                             <field name="age"/>
+                            <field name="appointment_count"/>
                         </group>
                         <group>
                             <field name="gender" invisible="context.get('hide_gender')"/>
@@ -107,6 +111,7 @@
             <search string="Patients">
                 <field name="name"/>
                 <field name="age"/>
+
 <!--                <field name="gender"/>-->
                 <field name="note"/>
                 <separator/>
